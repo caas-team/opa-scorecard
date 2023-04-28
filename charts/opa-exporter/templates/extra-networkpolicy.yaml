@@ -1,0 +1,19 @@
+{{- if .Values.extraNetworkPolicy.create -}}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "this.fullname" . }}-gatekeeper
+  labels: {{- include "this.labels" . | nindent 4 }}
+spec:
+  ingress:
+  - ports:
+    - port: {{ .Values.extraNetworkPolicy.port }}
+      protocol: {{ .Values.extraNetworkPolicy.protocol }}
+  podSelector:
+    matchLabels:
+    {{- with .Values.podMonitor.extraLabels }}
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  policyTypes:
+  - Ingress
+{{- end }}

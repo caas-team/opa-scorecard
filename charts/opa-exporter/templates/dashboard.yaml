@@ -1,0 +1,12 @@
+{{- if .Values.grafanaDashboard.create -}}
+---
+apiVersion: v1
+data:
+  gatekeeper.json: |-
+    {{ .Files.Get "files/gatekeeper.json" | fromYaml | toJson }}
+kind: ConfigMap
+metadata:
+  labels: {{- include "this.labels" . | nindent 4 }}
+    grafana_dashboard: "1"
+  name: {{ include "this.fullname" . }}
+{{- end }}

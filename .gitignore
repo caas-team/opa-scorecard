@@ -1,3 +1,4 @@
 gatekeeper-library/library
 .idea
 .DS_Store
+charts/opa-exporter/caas-values.yaml

@@ -1,0 +1,16 @@
+{{- if .Values.networkPolicy.create -}}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "this.fullname" . }}
+  labels: {{- include "this.labels" . | nindent 4 }}
+spec:
+  ingress:
+  - ports:
+    - port: 9141
+      protocol: TCP
+  podSelector:
+    matchLabels: {{- include "this.selectorLabels" . | nindent 6 }}
+  policyTypes:
+  - Ingress
+{{- end }}
