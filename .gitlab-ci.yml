@@ -1,0 +1,49 @@
+variables:
+  HTTP_PROXY: http://proxy.devops.telekom.de:3128/
+  HTTPS_PROXY: "$HTTP_PROXY"
+  http_proxy: "$HTTP_PROXY"
+  https_proxy: "$HTTP_PROXY"
+  NO_PROXY: ".telekom.net,.telekom.de,.t-online.corp,.otc-service.com,.t-internal.com,.devlab.de,.tmo,localhost,127.0.0.1,10.*,eks.amazonaws.com"
+  no_proxy: "$NO_PROXY"
+  GITLAB_RUNNER: otc_run_docker_m
+  REGISTRY: mtr.devops.telekom.de
+  REPO_NAME: caas/opa-scorecard
+  TAG: 0.4.0
+  # OCI_USER: username oci registry
+  # OCI_PASSWORD: password oci registry
+
+default:
+  image: mtr.devops.telekom.de/mcsps/golang:1.19
+  tags:
+  - "${GITLAB_RUNNER}"
+  retry:
+    max: 2
+    when:
+    - runner_system_failure
+    - stuck_or_timeout_failure
+    - scheduler_failure
+
+include:
+- template: Security/SAST.gitlab-ci.yml
+- template: Security/Dependency-Scanning.gitlab-ci.yml
+
+stages:
+- build
+- test
+
+sast:
+  stage: test
+
+before_script:
+  - apt update && apt install -y docker.io patch curl
+  - curl -LO https://github.com/sigstore/cosign/releases/download/v1.8.0/cosign-linux-amd64 && chmod +x cosign-linux-amd64 && mv  cosign-linux-amd64 /usr/local/bin/cosign
+
+build:
+  stage: build
+  script:
+  - cd exporter-go
+  - docker login ${REGISTRY} -u ${OCI_USER} -p ${OCI_PASSWORD}
+  - docker build -t $REGISTRY/${REPO_NAME}:${TAG} .
+  - docker push ${REGISTRY}/${REPO_NAME}:${TAG}
+  - cosign login ${REGISTRY} -u ${OCI_USER} -p ${OCI_PASSWORD}
+  - cosign sign --key ${COSIGN_KEY} ${REGISTRY}/${REPO_NAME}:${TAG}
