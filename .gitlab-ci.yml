@@ -13,7 +13,6 @@ variables:
   # OCI_PASSWORD: password oci registry
 
 default:
-  image: mtr.devops.telekom.de/mcsps/golang:1.20
   tags:
   - "${GITLAB_RUNNER}"
   retry:
@@ -34,16 +33,13 @@ stages:
 sast:
   stage: test
 
-before_script:
-  - apt update && apt install -y docker.io patch curl
-  - curl -LO https://github.com/sigstore/cosign/releases/download/v1.8.0/cosign-linux-amd64 && chmod +x cosign-linux-amd64 && mv  cosign-linux-amd64 /usr/local/bin/cosign
-  - curl -L https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-  - cosign version
-  - helm version
-
 build-image:
+  image: mtr.devops.telekom.de/mcsps/golang:1.20
   stage: build
   script:
+  - apt update && apt install -y docker.io patch curl
+  - curl -LO https://github.com/sigstore/cosign/releases/download/v1.8.0/cosign-linux-amd64 && chmod +x cosign-linux-amd64 && mv  cosign-linux-amd64 /usr/local/bin/cosign
+  - cosign version
   - cd exporter-go
   - docker login ${REGISTRY} -u ${OCI_USER} -p ${OCI_PASSWORD}
   - docker build -t $REGISTRY/${REPO_NAME}:${TAG} .
@@ -52,8 +48,12 @@ build-image:
   - cosign sign --key ${COSIGN_KEY} ${REGISTRY}/${REPO_NAME}:${TAG}
 
 build-chart:
+  image: mtr.devops.telekom.de/mcsps/golang:1.20
   stage: build
   script:
+  - apt update && apt install -y curl
+  - curl -L https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+  - helm version
   - cd charts/opa-exporter
   - helm registry login ${REGISTRY} -u ${OCI_USER} -p ${OCI_PASSWORD}
   - helm lint
