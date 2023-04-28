@@ -57,5 +57,5 @@ build-chart:
   - cd charts/opa-exporter
   - helm registry login ${REGISTRY} -u ${OCI_USER} -p ${OCI_PASSWORD}
   - helm lint
-  - helm package
+  - helm package .
   - helm push $(ls *.tgz| head -1) oci://${REGISTRY}/caas/charts
