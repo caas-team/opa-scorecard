@@ -37,8 +37,11 @@ sast:
 before_script:
   - apt update && apt install -y docker.io patch curl
   - curl -LO https://github.com/sigstore/cosign/releases/download/v1.8.0/cosign-linux-amd64 && chmod +x cosign-linux-amd64 && mv  cosign-linux-amd64 /usr/local/bin/cosign
+  - curl -L https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+  - cosign version
+  - helm version
 
-build:
+build-image:
   stage: build
   script:
   - cd exporter-go
@@ -47,3 +50,12 @@ build:
   - docker push ${REGISTRY}/${REPO_NAME}:${TAG}
   - cosign login ${REGISTRY} -u ${OCI_USER} -p ${OCI_PASSWORD}
   - cosign sign --key ${COSIGN_KEY} ${REGISTRY}/${REPO_NAME}:${TAG}
+
+build-chart:
+  stage: build
+  script:
+  - cd charts/opa-exporter
+  - helm registry login ${REGISTRY} -u ${OCI_USER} -p ${OCI_PASSWORD}
+  - helm lint
+  - helm package
+  - helm push $(ls *.tgz| head -1) oci://${REGISTRY}/caas/charts
