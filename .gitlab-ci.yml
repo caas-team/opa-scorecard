@@ -24,3 +24,7 @@ stages:
 test_go:
   before_script:
     - cd exporter-go
+
+kaniko_build_internal:
+  before_script:
+    - cd exporter-go
