@@ -8,15 +8,19 @@ variables:
   IMAGE_TAG: 0.4.0
 
 include:
-- project: caas/cicd_templates
-  file: ci_general.yml
-- project: caas/cicd_templates
-  file: helm_mirror.yml
+  - project: caas/cicd_templates
+    file: ci_general.yml
+  - project: caas/cicd_templates
+    file: helm_mirror.yml
 
 stages:
-- test
-- build
-- scan
-- push
-- sign
-- helm
+  - test
+  - build
+  - scan
+  - push
+  - sign
+  - helm
+
+test_go:
+  before_script:
+    - cd exporter-go
