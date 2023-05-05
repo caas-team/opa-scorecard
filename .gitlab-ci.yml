@@ -26,5 +26,7 @@ test_go:
     - cd exporter-go
 
 kaniko_build_internal:
+  variables:
+    CI_PROJECT_DIR: $CI_PROJECT_DIR/exporter-go
   before_script:
     - cd exporter-go
