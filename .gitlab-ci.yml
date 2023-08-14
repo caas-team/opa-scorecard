@@ -1,0 +1,31 @@
+variables:
+  NO_PROXY: ".telekom.net,.telekom.de,.t-online.corp,.otc-service.com,.t-internal.com,.devlab.de,.tmo,localhost,127.0.0.1,10.*,eks.amazonaws.com"
+  PACKAGE_GIT_REPO: https://github.com/caas-team/opa-scorecard.git
+  PACKAGE_HELM_TAG: caas
+  PACKAGE_CHART_PATH: charts/opa-exporter
+  IMAGE_REGISTRY: mtr.devops.telekom.de/caas
+  IMAGE_NAME: opa-scorecard
+  IMAGE_TAG: 0.4.0
+
+include:
+  - project: caas/cicd_templates
+    file: ci_general.yml
+  - project: caas/cicd_templates
+    file: helm_mirror.yml
+
+stages:
+  - test
+  - helm
+  - build
+  - scan
+  - push
+  - sign
+
+test_go:
+  before_script:
+    - cd exporter-go
+
+kaniko_build_internal:
+  before_script:
+    - cd exporter-go
+    - export CI_PROJECT_DIR="${CI_PROJECT_DIR}/exporter-go"
