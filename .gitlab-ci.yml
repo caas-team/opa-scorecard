@@ -17,8 +17,8 @@ stages:
   - test
   - build
   - scan
-  - push
-  - sign
+#  - push
+#  - sign
   - helm
 
 test_go:
