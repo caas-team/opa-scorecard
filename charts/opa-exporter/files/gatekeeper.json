@@ -33,7 +33,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "PBFA97CFB590B2093"
       },
       "gridPos": {
         "h": 1,
@@ -46,7 +46,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PBFA97CFB590B2093"
           },
           "refId": "A"
         }
@@ -57,7 +57,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "PBFA97CFB590B2093"
       },
       "description": "Description: Current number of constraint templates\n\"All NS\"\n\nUnderstanding this metric: Gatekeeper subscribes to a watch on all ConstraintTemplate resources. Whenever one is created or deleted on the cluster, this count gets updated.",
       "fieldConfig": {
@@ -109,7 +109,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PBFA97CFB590B2093"
           },
           "exemplar": true,
           "expr": "sum by (status) (gatekeeper_constraint_templates{pod=~\"gatekeeper-controller-manager-.+\"})",
@@ -124,7 +124,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "PBFA97CFB590B2093"
       },
       "description": "Description: The number of audit violations per constraint detected in the last audit cycle\n\nUnderstanding this metric: During each run, the audit sums up all of the violations that it finds and reports these counts per-enforcement-mode.",
       "fieldConfig": {
@@ -237,7 +237,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PBFA97CFB590B2093"
           },
           "exemplar": true,
           "expr": "sum by (enforcement_action) (gatekeeper_violations)",
@@ -255,7 +255,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "PBFA97CFB590B2093"
       },
       "fieldConfig": {
         "defaults": {
@@ -306,7 +306,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PBFA97CFB590B2093"
           },
           "exemplar": true,
           "expr": "sum by (kind) (opa_scorecard_constraint_violations{violating_namespace=~\"$namespace\"})",
@@ -319,7 +319,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PBFA97CFB590B2093"
           },
           "exemplar": true,
           "expr": "sum by (violating_name) (opa_scorecard_constraint_violations{violating_namespace=\"monitoring\"})",
@@ -339,7 +339,7 @@
       "collapsed": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "PBFA97CFB590B2093"
       },
       "gridPos": {
         "h": 1,
@@ -353,7 +353,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PBFA97CFB590B2093"
           },
           "refId": "A"
         }
@@ -364,7 +364,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "PBFA97CFB590B2093"
       },
       "fieldConfig": {
         "defaults": {
@@ -508,7 +508,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PBFA97CFB590B2093"
           },
           "exemplar": false,
           "expr": "sum  by (time, violating_kind, violating_namespace, violating_name, kind, violation_enforcement, violation_msg) rate(opa_scorecard_constraint_violations{violating_namespace=~\".*\"}[5m]))",
@@ -522,7 +522,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PBFA97CFB590B2093"
           },
           "exemplar": false,
           "expr": "group(opa_scorecard_constraint_violations{violating_namespace=~\".*\"}) by (time, violating_kind, violating_namespace, violating_name, kind, violation_enforcement, violation_msg)",
@@ -578,7 +578,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "PBFA97CFB590B2093"
       },
       "fieldConfig": {
         "defaults": {
@@ -624,7 +624,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PBFA97CFB590B2093"
           },
           "exemplar": true,
           "expr": "count by (violating_name) (opa_scorecard_constraint_violations{violating_namespace=~\"$namespace\"})",
@@ -668,7 +668,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "PBFA97CFB590B2093"
       },
       "fieldConfig": {
         "defaults": {
@@ -719,7 +719,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PBFA97CFB590B2093"
           },
           "exemplar": true,
           "expr": "sum by (kind) (opa_scorecard_constraint_violations{violating_namespace=~\"$namespace\"})",
@@ -732,7 +732,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PBFA97CFB590B2093"
           },
           "exemplar": true,
           "expr": "sum by (violating_name) (opa_scorecard_constraint_violations{violating_namespace=\"monitoring\"})",
@@ -751,7 +751,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "PBFA97CFB590B2093"
       },
       "fieldConfig": {
         "defaults": {
@@ -815,7 +815,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PBFA97CFB590B2093"
           },
           "exemplar": true,
           "expr": "sum(opa_scorecard_constraint_violations{violation_enforcement=\"warn\",violating_namespace=~\"$namespace\"})",
@@ -826,7 +826,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PBFA97CFB590B2093"
           },
           "exemplar": true,
           "expr": "sum(opa_scorecard_constraint_violations{violation_enforcement=\"deny\",violating_namespace=~\"$namespace\"})",
@@ -838,7 +838,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PBFA97CFB590B2093"
           },
           "exemplar": true,
           "expr": "sum(opa_scorecard_constraint_violations{violation_enforcement=\"dryrun\",violating_namespace=~\"$namespace\"})",
@@ -850,7 +850,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PBFA97CFB590B2093"
           },
           "exemplar": true,
           "expr": "sum(opa_scorecard_constraint_violations{violation_enforcement=\"unrecognized\",violating_namespace=~\"$namespace\"})",
@@ -867,7 +867,7 @@
       "collapsed": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "PBFA97CFB590B2093"
       },
       "gridPos": {
         "h": 1,
@@ -881,7 +881,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PBFA97CFB590B2093"
           },
           "refId": "A"
         }
@@ -892,7 +892,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "PBFA97CFB590B2093"
       },
       "description": "The number of audit violations per constraint detected in the last audit cycle",
       "fieldConfig": {
@@ -1002,7 +1002,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PBFA97CFB590B2093"
           },
           "exemplar": true,
           "expr": "sum by (enforcement_action) (gatekeeper_violations)",
@@ -1020,7 +1020,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "PBFA97CFB590B2093"
       },
       "description": "Latency of audit operation",
       "fieldConfig": {
@@ -1073,7 +1073,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PBFA97CFB590B2093"
           },
           "exemplar": true,
           "expr": "rate(gatekeeper_audit_duration_seconds_count[10m])",
@@ -1089,7 +1089,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "PBFA97CFB590B2093"
       },
       "description": "Description: Timestamp of last audit run time",
       "fieldConfig": {
@@ -1142,7 +1142,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PBFA97CFB590B2093"
           },
           "exemplar": true,
           "expr": "time() - gatekeeper_audit_last_run_time",
@@ -1158,7 +1158,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "PBFA97CFB590B2093"
       },
       "description": "Total number of watched GroupVersionKinds",
       "fieldConfig": {
@@ -1211,7 +1211,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PBFA97CFB590B2093"
           },
           "exemplar": true,
           "expr": "sum(gatekeeper_watch_manager_watched_gvk{pod=~\"gatekeeper-controller.+\"}) / sum(gatekeeper_watch_manager_watched_gvk{pod=~\"gatekeeper-controller.+\"})",
@@ -1227,7 +1227,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "PBFA97CFB590B2093"
       },
       "description": "Total number of GroupVersionKinds with a registered watch intent",
       "fieldConfig": {
@@ -1280,7 +1280,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PBFA97CFB590B2093"
           },
           "exemplar": true,
           "expr": "sum(gatekeeper_watch_manager_intended_watch_gvk{pod=~\"gatekeeper-controller.+\"}) / sum(gatekeeper_watch_manager_intended_watch_gvk{pod=~\"gatekeeper-controller.+\"})",
@@ -1297,7 +1297,7 @@
       "collapsed": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "PBFA97CFB590B2093"
       },
       "gridPos": {
         "h": 1,
@@ -1311,7 +1311,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PBFA97CFB590B2093"
           },
           "refId": "A"
         }
@@ -1322,7 +1322,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "PBFA97CFB590B2093"
       },
       "description": "Description: The number of requests that are routed to mutation webhook",
       "fieldConfig": {
@@ -1400,7 +1400,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PBFA97CFB590B2093"
           },
           "exemplar": false,
           "expr": "sum by (mutation_status, pod) (rate(gatekeeper_mutation_request_count[20m]))",
@@ -1415,7 +1415,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "PBFA97CFB590B2093"
       },
       "description": "Description: The number of requests that are routed to validation webhook",
       "fieldConfig": {
@@ -1493,7 +1493,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PBFA97CFB590B2093"
           },
           "exemplar": true,
           "expr": "sum by (admission_status, pod) (rate(gatekeeper_validation_request_count[20m]))",
@@ -1509,7 +1509,7 @@
       "collapsed": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "PBFA97CFB590B2093"
       },
       "gridPos": {
         "h": 1,
@@ -1523,7 +1523,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PBFA97CFB590B2093"
           },
           "refId": "A"
         }
@@ -1534,7 +1534,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "PBFA97CFB590B2093"
       },
       "description": "Description: Current number of constraint templates\n\nUnderstanding this metric: Gatekeeper subscribes to a watch on all ConstraintTemplate resources. Whenever one is created or deleted on the cluster, this count gets updated.",
       "fieldConfig": {
@@ -1585,7 +1585,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PBFA97CFB590B2093"
           },
           "exemplar": true,
           "expr": "sum by (status) (gatekeeper_constraint_templates{pod=~\"gatekeeper-controller-manager-.+\"})",
@@ -1600,7 +1600,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "PBFA97CFB590B2093"
       },
       "description": "Current number of constraints\nUnderstanding this metric: Gatekeeper subscribes to a watch on all constraint resources. Whenever one is created or deleted on the cluster, this count gets updated.",
       "fieldConfig": {
@@ -1710,7 +1710,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PBFA97CFB590B2093"
           },
           "exemplar": true,
           "expr": "sum by (enforcement_action) (gatekeeper_constraints)",
@@ -1728,7 +1728,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "PBFA97CFB590B2093"
       },
       "description": "Description: Constraint Template ingestion duration distribution\n\nUnderstanding this metric: When Gatekeeper is notified of a new constraint template, records the time from when it has loaded the resource from etcd to after OPA successfully returns from compiling the code. If there is a compilation error, the metric is not updated.",
       "fieldConfig": {
@@ -1809,7 +1809,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PBFA97CFB590B2093"
           },
           "exemplar": true,
           "expr": "rate(gatekeeper_constraint_template_ingestion_count[10m])",
@@ -1855,7 +1855,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "prometheus"
+          "uid": "PBFA97CFB590B2093"
         },
         "definition": "label_values(kube_pod_info, cluster)",
         "hide": 2,
