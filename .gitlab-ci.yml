@@ -1,61 +1,31 @@
 variables:
-  HTTP_PROXY: http://proxy.devops.telekom.de:3128/
-  HTTPS_PROXY: "$HTTP_PROXY"
-  http_proxy: "$HTTP_PROXY"
-  https_proxy: "$HTTP_PROXY"
   NO_PROXY: ".telekom.net,.telekom.de,.t-online.corp,.otc-service.com,.t-internal.com,.devlab.de,.tmo,localhost,127.0.0.1,10.*,eks.amazonaws.com"
-  no_proxy: "$NO_PROXY"
-  GITLAB_RUNNER: otc_run_docker_m
-  REGISTRY: mtr.devops.telekom.de
-  REPO_NAME: caas/opa-scorecard
-  TAG: 0.4.0
-  # OCI_USER: username oci registry
-  # OCI_PASSWORD: password oci registry
-
-default:
-  tags:
-  - "${GITLAB_RUNNER}"
-  retry:
-    max: 2
-    when:
-    - runner_system_failure
-    - stuck_or_timeout_failure
-    - scheduler_failure
+  PACKAGE_GIT_REPO: https://github.com/caas-team/opa-scorecard.git
+  PACKAGE_HELM_TAG: caas
+  PACKAGE_CHART_PATH: charts/opa-exporter
+  IMAGE_REGISTRY: mtr.devops.telekom.de/caas
+  IMAGE_NAME: opa-scorecard
+  IMAGE_TAG: 0.4.0
 
 include:
-- template: Security/SAST.gitlab-ci.yml
-- template: Security/Dependency-Scanning.gitlab-ci.yml
+  - project: caas/cicd_templates
+    file: ci_general.yml
+  - project: caas/cicd_templates
+    file: helm_mirror.yml
 
 stages:
-- build
-- test
+  - test
+  - build
+  - scan
+  - push
+  - sign
+  - helm
 
-sast:
-  stage: test
+test_go:
+  before_script:
+    - cd exporter-go
 
-build-image:
-  image: mtr.devops.telekom.de/mcsps/golang:1.20
-  stage: build
-  script:
-  - apt update && apt install -y docker.io patch curl
-  - curl -LO https://github.com/sigstore/cosign/releases/download/v1.8.0/cosign-linux-amd64 && chmod +x cosign-linux-amd64 && mv  cosign-linux-amd64 /usr/local/bin/cosign
-  - cosign version
-  - cd exporter-go
-  - docker login ${REGISTRY} -u ${OCI_USER} -p ${OCI_PASSWORD}
-  - docker build -t $REGISTRY/${REPO_NAME}:${TAG} .
-  - docker push ${REGISTRY}/${REPO_NAME}:${TAG}
-  - cosign login ${REGISTRY} -u ${OCI_USER} -p ${OCI_PASSWORD}
-  - cosign sign --key ${COSIGN_KEY} ${REGISTRY}/${REPO_NAME}:${TAG}
-
-build-chart:
-  image: mtr.devops.telekom.de/mcsps/golang:1.20
-  stage: build
-  script:
-  - apt update && apt install -y curl
-  - curl -L https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-  - helm version
-  - cd charts/opa-exporter
-  - helm registry login ${REGISTRY} -u ${OCI_USER} -p ${OCI_PASSWORD}
-  - helm lint
-  - helm package .
-  - helm push $(ls *.tgz| head -1) oci://${REGISTRY}/caas/charts
+kaniko_build_internal:
+  before_script:
+    - cd exporter-go
+    - export CI_PROJECT_DIR="${CI_PROJECT_DIR}/exporter-go"
