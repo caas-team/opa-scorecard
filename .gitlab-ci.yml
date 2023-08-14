@@ -15,11 +15,11 @@ include:
 
 stages:
   - test
+  - helm
   - build
   - scan
-#  - push
-#  - sign
-  - helm
+  - push
+  - sign
 
 test_go:
   before_script:
