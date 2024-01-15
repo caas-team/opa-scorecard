@@ -42,7 +42,7 @@ service:
   port: 80
 
 serviceMonitor:
-  # -- Wherter to install `ServiceMonitor` or not
+  # -- Whether to install `ServiceMonitor` or not
   enabled: true
   # -- Extra labels
   extraLabels: {}
@@ -72,20 +72,20 @@ rbac:
   #     verbs: []
 
 networkPolicy:
-  # -- Wherter to install `NetworkPolicy` or not
+  # -- Whether to install `NetworkPolicy` or not
   create: false
 
 extraNetworkPolicy:
-  # -- Wherter to install `NetworkPolicy` for Gatekeeper PodMonitor or not
+  # -- Whether to install `NetworkPolicy` for Gatekeeper PodMonitor or not
   create: false
   port: 8888
   protocol: TCP
 
 grafanaDashboard:
-  # -- Wherter to install `grafanaDashboard` (as ConfigMap) or not
+  # -- Whether to install `grafanaDashboard` (as ConfigMap) or not
   create: false
 
 podMonitor:
-  # -- Wherter to install `podMonitor` (for Gatekeeper) or not
+  # -- Whether to install `podMonitor` (for Gatekeeper) or not
   create: false
   extraLabels: {}
