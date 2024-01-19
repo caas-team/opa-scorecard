@@ -17,9 +17,6 @@ spec:
   selector:
     matchLabels:
       control-plane: audit-controller
-    {{- with .Values.podMonitor.extraLabels }}
-      {{- toYaml . | nindent 6 }}
-    {{- end }}
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
@@ -27,9 +24,6 @@ metadata:
   name: {{ include "this.fullname" . }}-controller-manager
   labels:
     {{- include "this.labels" . | nindent 4 }}
-    {{- with .Values.podMonitor.extraLabels }}
-      {{- toYaml . | nindent 4 }}
-    {{- end }}
 spec:
   namespaceSelector:
     matchNames:
@@ -39,7 +33,4 @@ spec:
   selector:
     matchLabels:
       control-plane: controller-manager
-    {{- with .Values.podMonitor.extraLabels }}
-      {{- toYaml . | nindent 6 }}
-    {{- end }}
 {{- end }}
