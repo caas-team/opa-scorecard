@@ -9,4 +9,5 @@ metadata:
   labels: {{- include "this.labels" . | nindent 4 }}
     grafana_dashboard: "1"
   name: {{ include "this.fullname" . }}
+  namespace: {{ default .Release.Namespace .Values.grafanaDashboard.namespace }}
 {{- end }}
