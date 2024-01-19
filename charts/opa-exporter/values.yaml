@@ -83,7 +83,9 @@ extraNetworkPolicy:
 
 grafanaDashboard:
   # -- Whether to install `grafanaDashboard` (as ConfigMap) or not
-  create: false
+  create: true
+  # -- If the dashboard shouldn't be deployed in the release namespace, specify the namespace here
+  namespace: ""
 
 podMonitor:
   # -- Whether to install `podMonitor` (for Gatekeeper) or not
