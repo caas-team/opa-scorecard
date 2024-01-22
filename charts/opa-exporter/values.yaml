@@ -90,4 +90,5 @@ grafanaDashboard:
 podMonitor:
   # -- Whether to install `podMonitor` (for Gatekeeper) or not
   create: false
+  # -- Extra labels to use for the PodMonitor resource
   extraLabels: {}
