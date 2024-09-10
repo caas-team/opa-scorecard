@@ -76,10 +76,20 @@ networkPolicy:
   create: false
 
 extraNetworkPolicy:
-  # -- Whether to install `NetworkPolicy` for Gatekeeper PodMonitor or not
-  create: false
+  # -- Whether to install an additional ingress `NetworkPolicy` 
+  # for Gatekeeper PodMonitor or not
+  create: true
+  # -- Which port to open (gatekeeper components metrics port is 8888)
   port: 8888
+  # -- The protocol to use
   protocol: TCP
+  from:
+    # -- Pod selector, used to optionally to select the prometheus pod(s)
+    podSelector: {}
+    # -- A namespace selector to optionally select the origin of the prometheus scrape requests
+    namespaceSelector: {}
+  # -- Pod selector (use to select the gatekeeper pods)
+  podSelector: {}
 
 grafanaDashboard:
   # -- Whether to install `grafanaDashboard` (as ConfigMap) or not

@@ -9,10 +9,24 @@ spec:
   - ports:
     - port: {{ .Values.extraNetworkPolicy.port }}
       protocol: {{ .Values.extraNetworkPolicy.protocol }}
+    {{- if or (not (empty .Values.extraNetworkPolicy.from.podSelector)) (not (empty .Values.extraNetworkPolicy.from.namespaceSelector)) }}
+    from:
+    {{- if .Values.extraNetworkPolicy.from.podSelector }}
+    - podSelector:
+      {{- with .Values.extraNetworkPolicy.from.podSelector }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}  
+    {{- end }}
+    {{- if .Values.extraNetworkPolicy.from.namespaceSelector }}
+    - namespaceSelector:
+      {{- with .Values.extraNetworkPolicy.from.namespaceSelector }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- end }}
+    {{- end }}
   podSelector:
-    matchLabels:
-    {{- with .Values.podMonitor.extraLabels }}
-      {{- toYaml . | nindent 6 }}
+    {{- with .Values.extraNetworkPolicy.podSelector }}
+    {{- toYaml . | nindent 4 }}
     {{- end }}
   policyTypes:
   - Ingress
