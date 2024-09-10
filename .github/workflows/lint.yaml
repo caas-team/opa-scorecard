@@ -1,0 +1,15 @@
+name: Helm Lint
+
+on:
+  push:
+
+jobs:
+  helm:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v4
+    - name: Helm lint
+      run: |
+        helm lint .
+

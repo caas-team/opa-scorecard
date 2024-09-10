@@ -1,0 +1,28 @@
+name: Helm Package & Push
+
+on:
+  push:
+    tags:
+    - '*'
+
+jobs:
+  helm:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v4
+    - name: Helm lint & package & push
+      run: |
+        cd charts/opa-exporter
+        helm registry login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
+        helm registry login ${MTR} -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
+        helm lint .
+        helm package .
+        helm push $(ls *.tgz| head -1) oci://ghcr.io/caas-team/charts
+        helm push $(ls *.tgz| head -1) oci://${MTR}/${REPO}/charts
+      env:
+        DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
+        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+        MTR: mtr.devops.telekom.de
+        REPO: caas
+
